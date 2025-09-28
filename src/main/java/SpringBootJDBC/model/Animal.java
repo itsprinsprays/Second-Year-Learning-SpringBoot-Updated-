@@ -5,6 +5,7 @@ public class Animal {
 	private String name, type;
 	private int ID;
 	
+	public Animal() {}
 	public Animal(String name, String type, int ID) {
 		this.name = name;
 		this.type = type;

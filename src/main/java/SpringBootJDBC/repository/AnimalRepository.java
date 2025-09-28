@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AnimalRepository {
+public class AnimalRepository implements AnimalImp{
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -19,32 +19,37 @@ public class AnimalRepository {
 			new Animal(rs.getString("name"), rs.getString("type"), rs.getInt("id")
 			);
 			
-	public int create(Animal animal) {
+	//create
+	
+	public int createAnimal(Animal animal) {
 		String sql = ("Insert into animals");
 		return jdbcTemplate.update(sql, animal.getName(), animal.getType());
 	}
 	
 	// Read
+	@Override
     public List<Animal> findAll() {
         String sql = "SELECT * FROM animals";
         return jdbcTemplate.query(sql, rowMapper);
     }
-
-    public Animal findById(int id) {
+	@Override
+    public Animal findByID(int ID) {
         String sql = "SELECT * FROM animals WHERE id=?";
-        return jdbcTemplate.queryForObject(sql, rowMapper, id);
+        return jdbcTemplate.queryForObject(sql, rowMapper, ID);
     }
 
     // Update
-    public int update(Animal animal) {
+	@Override
+    public int updateAnimal(Animal animal) {
         String sql = "UPDATE animals SET name=?, type=? WHERE id=?";
         return jdbcTemplate.update(sql, animal.getName(), animal.getType(), animal.getID());
     }
 
     // Delete
-    public int delete(int id) {
+	@Override
+    public int deleteAnimal(int ID) {
         String sql = "DELETE FROM animals WHERE id=?";
-        return jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, ID);
     }
 			
 	
